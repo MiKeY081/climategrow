@@ -11,9 +11,14 @@ import photo1 from "../../assets/photo1.jpg";
 import photo2 from "../../assets/no-one-cares-l_5MJnbrmrs-unsplash.jpg";
 import photo3 from "../../assets/photo2.webp";
 import photo4 from "../../assets/photo4.jpg";
+import photo5 from "../../assets/photo5.jpg";
 
 // Use the imported images in the array
 const images = [
+  {
+    url: photo5,
+    alt: 'farming in nepal',
+  },
   {
     url: photo1,
     alt: 'Farmer inspecting crops',
