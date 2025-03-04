@@ -4,10 +4,11 @@ import { Provider } from 'react-redux';  // Import Provider from react-redux
 import './index.css';
 import { store } from './store/index';  // Import your Redux store
 import axios from 'axios';
+import App from './App';
 
 const BASE_URL =
   process.env.NODE_ENV === "development"
-    ? "http://localhost:5000/api/v1"
+    ? "http://localhost:8001/api/v1"
     : "https://climategrow-server.vercel.app/api/v1";
 
 axios.defaults.baseURL = BASE_URL;

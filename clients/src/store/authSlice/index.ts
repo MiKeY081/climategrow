@@ -25,7 +25,7 @@ export const registerUser = createAsyncThunk(
   "/auth/register",
   async (formData: { name: string; email: string; password: string }) => {
     const response = await axios.post(
-      `/register`,  // Hardcoded URL
+      `/auth/register`,  // Hardcoded URL
       formData,
       { withCredentials: true }
     );
@@ -37,7 +37,7 @@ export const loginUser = createAsyncThunk(
   "/auth/login",
   async (formData: { email: string; password: string }) => {
     const response = await axios.post(
-      `/login`,  // Hardcoded URL
+      `/auth/login`,  // Hardcoded URL
       formData,
       { withCredentials: true }
     );

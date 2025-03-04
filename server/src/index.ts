@@ -14,7 +14,7 @@ connectDB();
 app.use(express.json());
 app.use(cookieParser());
 app.use(cors({
-    origin: ["http://localhost:3000", "https://climategrow.vercel.app"],
+    origin: ["http://localhost:5174", "https://climategrow.vercel.app"],
     credentials: true,
     allowedHeaders: ["Content-Type", "Authorization"],
     methods: ["GET", "POST", "PUT", "DELETE"]
@@ -30,7 +30,7 @@ app.get("/", (req, res) => {
 app.use("/api/v1/auth", authRoute);
 app.use(handleError);
 
-const PORT = 8001;
+const PORT = "https://climategrow-server.vercel.app/"
 app.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`);
 });
