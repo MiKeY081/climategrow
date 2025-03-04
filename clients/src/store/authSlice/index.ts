@@ -1,7 +1,6 @@
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import axios from "axios";
 
-// Define types for the state
 interface User {
   _id: string;
   name: string;
@@ -14,18 +13,17 @@ interface AuthState {
   user: User | null;
 }
 
-// Initial state
 const initialState: AuthState = {
   isAuthenticated: false,
   isLoading: true,
   user: null,
 };
-// Async actions (Thunks)
+
 export const registerUser = createAsyncThunk(
-  "/auth/register",
+  "auth/register",
   async (formData: { name: string; email: string; password: string }) => {
     const response = await axios.post(
-      `/auth/register`,  // Hardcoded URL
+      "/api/auth/register",
       formData,
       { withCredentials: true }
     );
@@ -34,10 +32,10 @@ export const registerUser = createAsyncThunk(
 );
 
 export const loginUser = createAsyncThunk(
-  "/auth/login",
+  "auth/login",
   async (formData: { email: string; password: string }) => {
     const response = await axios.post(
-      `/auth/login`,  // Hardcoded URL
+      "/api/auth/login",
       formData,
       { withCredentials: true }
     );
@@ -56,21 +54,15 @@ const authSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-      // Register
       .addCase(registerUser.pending, (state) => {
         state.isLoading = true;
       })
       .addCase(registerUser.fulfilled, (state) => {
         state.isLoading = false;
-        state.user = null;
-        state.isAuthenticated = false;
       })
       .addCase(registerUser.rejected, (state) => {
         state.isLoading = false;
-        state.user = null;
-        state.isAuthenticated = false;
       })
-      // Login
       .addCase(loginUser.pending, (state) => {
         state.isLoading = true;
       })
@@ -79,22 +71,14 @@ const authSlice = createSlice({
         if (action.payload.success) {
           state.user = action.payload.user;
           state.isAuthenticated = true;
-          sessionStorage.setItem('isAuthenticated', 'true');  // Set as 'true' explicitly
-        } else {
-          state.user = null;
-          state.isAuthenticated = false;
-          sessionStorage.setItem('isAuthenticated', 'false');  // Set as 'false'
+          sessionStorage.setItem('isAuthenticated', 'true');
         }
       })
-      
       .addCase(loginUser.rejected, (state) => {
         state.isLoading = false;
-        state.user = null;
-        state.isAuthenticated = false;
       });
   },
 });
 
-// Export actions and reducer
 export const { setUser } = authSlice.actions;
 export default authSlice.reducer;

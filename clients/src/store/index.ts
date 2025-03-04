@@ -1,12 +1,11 @@
 import { configureStore } from "@reduxjs/toolkit";
-import authReducer from "./authSlice/index"; 
-import cropReducer from "./cropSlice/index"; // Adjust path accordingly
-// Adjust path accordingly
+import authReducer from "./authSlice";
+import cropReducer from "./cropslice/cropSlice";
 
 export const store = configureStore({
   reducer: {
     auth: authReducer,
-    crop:cropReducer,
+    crop: cropReducer,
   },
 });
 

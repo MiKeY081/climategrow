@@ -1,7 +1,6 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 
-// Define the initial state
 interface Crop {
   _id: string;
   name: string;
@@ -29,26 +28,23 @@ const initialState: CropState = {
   predictionResult: null,
 };
 
-// Async thunk to fetch crops by ID
-export const fetchCropById = createAsyncThunk(
+export const fetchCropById = createAsyncThunk<Crop, string>(
   'crops/fetchCropById',
-  async (id: string) => {
+  async (id) => {
     const response = await axios.get(`/api/crops/${id}`);
     return response.data;
   }
 );
 
-// Async thunk to fetch crops by month
-export const fetchCropsByMonth = createAsyncThunk(
+export const fetchCropsByMonth = createAsyncThunk<Crop[], string>(
   'crops/fetchCropsByMonth',
-  async () => {
-    const response = await axios.get('/api/crops/get');
+  async (month) => {
+    const response = await axios.get(`/api/crops/month/${month}`);
     return response.data;
   }
 );
 
-// Async thunk to fetch alternative crops
-export const fetchAlternativeCrops = createAsyncThunk(
+export const fetchAlternativeCrops = createAsyncThunk<Crop[], void>(
   'crops/fetchAlternativeCrops',
   async () => {
     const response = await axios.get('/api/crops/alternative');
@@ -56,8 +52,7 @@ export const fetchAlternativeCrops = createAsyncThunk(
   }
 );
 
-// Async thunk to fetch customer preference trend
-export const fetchCustomerTrend = createAsyncThunk(
+export const fetchCustomerTrend = createAsyncThunk<Crop[], void>(
   'crops/fetchCustomerTrend',
   async () => {
     const response = await axios.get('/api/crops/customer-trend');
@@ -65,16 +60,17 @@ export const fetchCustomerTrend = createAsyncThunk(
   }
 );
 
-// Async thunk to fetch crop prediction
-export const fetchCropPrediction = createAsyncThunk(
+export const fetchCropPrediction = createAsyncThunk<
+  PredictionResult,
+  { cropType: string; temperature: number; rainfall: number; ph: number }
+>(
   'crops/fetchCropPrediction',
-  async (predictionData: { cropType: string, temperature: number, rainfall: number, ph: number }) => {
+  async (predictionData) => {
     const response = await axios.post('/api/prediction', predictionData);
-    return response.data; // Assuming the response contains the prediction result
+    return response.data;
   }
 );
 
-// Crop slice
 const cropSlice = createSlice({
   name: 'crops',
   initialState,
@@ -135,7 +131,7 @@ const cropSlice = createSlice({
       })
       .addCase(fetchCropPrediction.fulfilled, (state, action) => {
         state.loading = false;
-        state.predictionResult = action.payload; // Store the prediction result
+        state.predictionResult = action.payload;
       })
       .addCase(fetchCropPrediction.rejected, (state, action) => {
         state.loading = false;
