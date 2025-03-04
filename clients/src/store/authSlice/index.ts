@@ -20,13 +20,12 @@ const initialState: AuthState = {
   isLoading: true,
   user: null,
 };
-
 // Async actions (Thunks)
 export const registerUser = createAsyncThunk(
   "/auth/register",
   async (formData: { name: string; email: string; password: string }) => {
     const response = await axios.post(
-      `http://localhost:8001/api/v1/auth/register`,  // Hardcoded URL
+      `/register`,  // Hardcoded URL
       formData,
       { withCredentials: true }
     );
@@ -38,7 +37,7 @@ export const loginUser = createAsyncThunk(
   "/auth/login",
   async (formData: { email: string; password: string }) => {
     const response = await axios.post(
-      `http://localhost:8001/api/v1/auth/login`,  // Hardcoded URL
+      `/login`,  // Hardcoded URL
       formData,
       { withCredentials: true }
     );
